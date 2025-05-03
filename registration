@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let confirmPassword = document.getElementById("confirmPassword").value.trim();
+            let nameError = document.getElementById("nameError");
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let confirmPasswordError = document.getElementById("confirmPasswordError");
+            let valid = true;
+
+            // Reset all error messages
+            nameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            confirmPasswordError.textContent = "";
+
+            // Name validation
+            if (name === "") {
+                nameError.textContent = "Name is required";
+                valid = false;
+            }
+
+            // Email validation
+            if (email === "") {
+                emailError.textContent = "Email is required";
+                valid = false;
+            } else if (!isValidEmail(email)) {
+                emailError.textContent = "Invalid email format";
+                valid = false;
+            }
+
+            // Password validation
+            if (password === "") {
+                passwordError.textContent = "Password is required";
+                valid = false;
+            } else if (password.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters";
+                valid = false;
+            } else if (!hasNumber(password)) {
+                passwordError.textContent = "Password must contain a number";
+                valid = false;
+            } else if (!hasUpperCase(password)) {
+                passwordError.textContent = "Password must contain an uppercase letter";
+                valid = false;
+            }
+
+            // Confirm Password validation
+            if (confirmPassword === "") {
+                confirmPasswordError.textContent = "Confirm Password is required";
+                valid = false;
+            } else if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match";
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        function isValidEmail(email) {
+            // Basic email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function hasNumber(str) {
+            return /\d/.test(str);
+        }
+
+        function hasUpperCase(str) {
+            return /[A-Z]/.test(str);
+        }
+    </script>
+    <style>
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Student Registration</h2>
+        <form name="registrationForm" onsubmit="return validateForm()" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name">
+                <span id="nameError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+                <span id="emailError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+                <span id="passwordError" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+                <span id="confirmPasswordError" class="error-message"></span>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
